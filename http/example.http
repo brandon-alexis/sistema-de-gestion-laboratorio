@@ -1,0 +1,10 @@
+@host = "http://localhost:4000"
+
+## Create student
+POST {{host}}/students
+Content-Type: application/json
+
+{
+  "fullname": "John Doe",
+  "documentNumber": "123456789"
+}
