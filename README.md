@@ -26,4 +26,13 @@ cd sistema-de-gestion-laboratorio
 
 instala las dependencias del proyecto con el comando `npm install`
 
-por ultimo para ejecutar la aplicacion ejecuta el comando `npm run start:dev` en modo desarrollo, o si quieres el codigo compilado ejecuta este par de comando `npm run build` y `npm run start`
+```bash
+npm install # instalar dependencias del proyecto
+
+npm run start:dev # ejecutar en modo desarrolo
+
+# o
+
+npm run build # compilar el codigo ts a js
+npm run start # ejecutar build de la aplicacion
+```
