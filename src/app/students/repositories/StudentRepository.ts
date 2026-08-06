@@ -1,4 +1,4 @@
-import type { Student } from '@students/model/Student.js';
+import type { Student } from '@students/models/Student.js';
 
 export interface StudentRepository {
   create(student: Student): Promise<void>;

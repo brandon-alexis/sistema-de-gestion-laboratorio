@@ -1,0 +1,15 @@
+# version control
+.git
+.gitignore
+
+# dependencies
+node_modules/
+
+
+# environment variables
+*.env
+.env.*
+
+# build
+dist/
+

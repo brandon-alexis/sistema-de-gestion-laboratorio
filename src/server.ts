@@ -1,7 +1,17 @@
-import { app } from "@src/app.js";
-import { port } from "@config/loadEnvironment.js";
+import { app } from '@src/app.js';
+import { port } from '@config/loadEnvironment.js';
+import { dataSource } from '@config/loadDatabase.js';
 
-const run = () => {
+const run = async () => {
+  await dataSource
+    .initialize()
+    .then(() => {
+      console.log('Database connected successfully');
+    })
+    .catch((error: any) =>
+      console.error(`Error connecting to database...`, error),
+    );
+
   console.log(`Server running on port ${port}`);
 };
 

@@ -29,6 +29,10 @@
     "noFallthroughCasesInSwitch": true,
     "noPropertyAccessFromIndexSignature": true,
 
+    // Decorators
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
@@ -39,10 +43,10 @@
     "skipLibCheck": true,
     "paths": {
       "@src/*": ["./src/*"],
-      "@config/*": ["./src/config/*"],
+      "@config/*": ["./src/shared/config/*"],
       "@students/*": ["./src/app/students/*"]
     }
   },
-  "include": ["./src/**/*.ts", "./tests/**/*.test.ts"],
+  "include": ["./src/**/*.ts", "./src/tests/**/*.test.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,5 +1,5 @@
-import { Student } from '@students/model/Student.js';
-import type { StudentRepository } from '@students/repository/StudentRepository.js';
+import { Student } from '@students/models/Student.js';
+import type { StudentRepository } from '@students/repositories/StudentRepository.js';
 
 export class LocalStudentRepository implements StudentRepository {
   private students: Map<string, Student> = new Map();
@@ -8,7 +8,7 @@ export class LocalStudentRepository implements StudentRepository {
     this.students.set(student.getId(), student);
   }
 
-  findAll(): Promise<Student[]> {
+  async findAll(): Promise<Student[]> {
     return Promise.resolve(Array.from(this.students.values()));
   }
 
@@ -21,7 +21,7 @@ export class LocalStudentRepository implements StudentRepository {
     const foundStudent = this.students.get(id);
 
     if (!foundStudent) {
-      return Promise.reject(new Error(`Student with id ${id} not found`));
+      return Promise.reject();
     }
 
     if (student.getFullname()) {

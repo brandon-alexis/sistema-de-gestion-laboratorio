@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import logger from 'morgan';
 
-import { router as stutendRouter } from '@students/router/studentRouter.js';
+import { router as stutendRouter } from '@students/routers/studentRouter.js';
 
 export const app = express();
 

@@ -1,20 +1,18 @@
 import type { Request, Response } from 'express';
 
-import type { StudentService } from '@students/service/StudentService.js';
-import { CreateStudentDto } from '@students/dto/CreateStudentDto.js';
-import { StudentMapper } from '@students/mapper/StudentMapper.js';
-import type { Student } from '@students/model/Student.js';
-import type { ResponseStudentDto } from '@students/dto/ResponseStudentDto.js';
+import type { StudentService } from '@students/services/StudentService.js';
+import type { ResponseStudentDto } from '@students/dtos/ResponseStudentDto.js';
+import type { Student } from '@students/models/Student.js';
 import type { studentParams } from '@students/types/studentParams.js';
-import type { StudentBody } from '../types/studentBody.js';
+import type { StudentBody } from '@students/types/studentBody.js';
+import { CreateStudentDto } from '@students/dtos/CreateStudentDto.js';
+import { StudentMapper } from '@students/mappers/StudentMapper.js';
+import { UpdateStudentDto } from '@students/dtos/UpdateStudentDto.js';
 
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
-  createStudent = async (
-    req: Request<StudentBody>,
-    res: Response,
-  ): Promise<void> => {
+  createStudent = async (req: Request, res: Response): Promise<void> => {
     try {
       const { fullname, documentNumber }: StudentBody = req.body;
 
@@ -59,6 +57,33 @@ export class StudentController {
         StudentMapper.fromStudentToResponseStudentDto(student);
 
       res.status(200).json(responseStudentDto);
+    } catch (error: Error | any) {
+      res.status(404).json({ error: error.message });
+    }
+  };
+
+  public updateStudent = async (req: Request<studentParams>, res: Response) => {
+    try {
+      const { fullname, documentNumber }: StudentBody = req.body;
+      const { id }: studentParams = req.params;
+
+      const updateStudentDto = new UpdateStudentDto(fullname, documentNumber);
+
+      await this.studentService.updateStudent(id, updateStudentDto);
+
+      res.status(200).json({ message: 'Estudiante actualizado con exito' });
+    } catch (error: Error | any) {
+      res.status(404).json({ error: error.message });
+    }
+  };
+
+  public deleteStudent = async (req: Request<studentParams>, res: Response) => {
+    try {
+      const { id }: studentParams = req.params;
+
+      await this.studentService.deleteStudent(id);
+
+      res.status(200).json({ message: 'Estudiante eliminado con exito' });
     } catch (error: Error | any) {
       res.status(404).json({ error: error.message });
     }

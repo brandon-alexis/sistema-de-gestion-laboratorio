@@ -1,7 +1,8 @@
-import type { StudentRepository } from '@students/repository/StudentRepository.js';
-import { Student } from '@students/model/Student.js';
-import { StudentNotFoundException } from '@students/exception/StudentNotFoundException.js';
-import { StudentAlreadyExistsException } from '@students/exception/StudentAlreadyExists.js';
+import type { StudentRepository } from '@students/repositories/StudentRepository.js';
+import { Student } from '@students/models/Student.js';
+import { StudentNotFoundException } from '@students/exceptions/StudentNotFoundException.js';
+import { StudentAlreadyExistsException } from '@students/exceptions/StudentAlreadyExists.js';
+import type { UpdateStudentDto } from '../dtos/UpdateStudentDto.js';
 
 export class StudentService {
   constructor(private readonly studentRepository: StudentRepository) {}
@@ -36,7 +37,7 @@ export class StudentService {
     return foundStudent;
   }
 
-  public async updateStudent(id: string, student: Student): Promise<void> {
+  public async updateStudent(id: string, dto: UpdateStudentDto): Promise<void> {
     const foundStudent: Student | null =
       await this.studentRepository.findById(id);
 
@@ -44,7 +45,30 @@ export class StudentService {
       throw new StudentNotFoundException();
     }
 
-    await this.studentRepository.update(id, student);
+    const students: Student[] = await this.studentRepository.findAll();
+
+    const studentExists: boolean = students.some(
+      (_student) =>
+        _student.getDocumentNumber() === foundStudent.getDocumentNumber() &&
+        _student.getId() !== id,
+    );
+
+    if (studentExists) {
+      throw new StudentAlreadyExistsException();
+    }
+
+    const fullname = dto.getFullname();
+    const documentNumber = dto.getDocumentNumber();
+
+    if (fullname !== undefined) {
+      foundStudent.setFullname(fullname);
+    }
+
+    if (documentNumber !== undefined) {
+      foundStudent.setDocumentNumber(documentNumber);
+    }
+
+    await this.studentRepository.update(id, foundStudent);
   }
 
   public async deleteStudent(id: string): Promise<void> {
