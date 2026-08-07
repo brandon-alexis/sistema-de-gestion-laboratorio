@@ -9,4 +9,9 @@ export const studentApi = {
 
     return data;
   },
+  deleteStudent: async (id: string): Promise<{ message: string }> => {
+    const { data } = await api.delete(`${endpoint}/${id}`);
+
+    return data;
+  },
 };

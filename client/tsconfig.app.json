@@ -24,6 +24,7 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
+      "@/*": ["./src/*"],
       "@shared/*": ["./src/shared/*"],
       "@students/*": ["./src/app/students/*"]
     }

@@ -1,38 +1,60 @@
-import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router';
+import { toast } from 'sonner';
+import { TableCell, TableRow } from '@/components/ui/table';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { Button } from '@/components/ui/button';
+import { studentApi } from '@students/api/studentApi';
 
 interface StudentRow {
+  id: string;
   fullname: string;
   documentNumber: string;
+  onDeleted: () => Promise<void>;
 }
 
-export function StudentRow({ fullname, documentNumber }: StudentRow) {
+export function StudentRow({
+  id,
+  fullname,
+  documentNumber,
+  onDeleted,
+}: StudentRow) {
+  async function deleteStudent() {
+    const promise = studentApi.deleteStudent(id);
+    toast.promise(promise, {
+      loading: 'Cargando...',
+      success: (data: { message: string }) => {
+        return `${data.message}`;
+      },
+      error: 'Hubo un eror eliminando el estudiante',
+    });
+
+    await promise;
+    await onDeleted();
+  }
+
   return (
-    <tr>
-      <td>
-        <div className="flex items-center gap-3">
-          <div className="avatar">
-            <div className="mask mask-squircle h-12 w-12">
-              <img
-                src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                alt="Avatar Tailwind CSS Component"
-              />
-            </div>
-          </div>
-          <div>
-            <div className="font-bold">{fullname}</div>
-            <div className="text-sm opacity-50">{documentNumber}</div>
-          </div>
-        </div>
-      </td>
-      <td className="flex gap-5">
-        <Link to="" className="btn btn-warning">
-          <FaRegEdit />
-        </Link>
-        <Link to="" className="btn btn-error">
-          <FaRegTrashAlt />
-        </Link>
-      </td>
-    </tr>
+    <TableRow>
+      <TableCell>{documentNumber}</TableCell>
+      <TableCell>{fullname}</TableCell>
+      <TableCell>
+        <ButtonGroup>
+          <Button variant="outline">
+            <Link
+              to={`/students/edit/${id}`}
+              className="w-full h-full flex justify-center items-center"
+            >
+              Editar
+            </Link>
+          </Button>
+          <Button
+            variant="destructive"
+            className="cursor-pointer"
+            onClick={() => deleteStudent()}
+          >
+            Eliminar
+          </Button>
+        </ButtonGroup>
+      </TableCell>
+    </TableRow>
   );
 }

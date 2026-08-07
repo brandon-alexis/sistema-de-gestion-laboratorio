@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 import { studentApi } from '@students/api/studentApi';
 import type { ResponseStudentDto } from '@students/dto/ResponseStudentDto';
-import { StudentRow } from './StudentRow';
+import { StudentRow } from '@students/components/StudentRow';
 
 export function StudentsTable() {
   const [students, setStudents] = useState<ResponseStudentDto[]>([]);
@@ -27,24 +35,33 @@ export function StudentsTable() {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-zebra">
-        <thead className="bg-base-300">
-          <tr>
-            <th>Nombre completo</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map(({ id, fullname, documentNumber }) => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="">Id</TableHead>
+          <TableHead>Nombre</TableHead>
+          <TableHead>Acciones</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {students.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={3} className="text-center">
+              No hay estudiantes registrados.
+            </TableCell>
+          </TableRow>
+        ) : (
+          students.map(({ id, documentNumber, fullname }) => (
             <StudentRow
               key={id}
-              fullname={fullname}
+              id={id}
               documentNumber={documentNumber}
+              fullname={fullname}
+              onDeleted={loadStudents}
             />
-          ))}
-        </tbody>
-      </table>
-    </div>
+          ))
+        )}
+      </TableBody>
+    </Table>
   );
 }

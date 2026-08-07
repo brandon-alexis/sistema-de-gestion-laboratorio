@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router';
+import { Toaster } from 'sonner';
+
 import './index.css';
 import App from './App.tsx';
 import { Students } from '@students/pages/Students';
@@ -15,5 +17,6 @@ createRoot(document.getElementById('root')!).render(
         </Route>
       </Routes>
     </BrowserRouter>
+    <Toaster />
   </StrictMode>,
 );
