@@ -49,8 +49,7 @@ export class StudentService {
 
     const studentExists: boolean = students.some(
       (_student) =>
-        _student.getDocumentNumber() === foundStudent.getDocumentNumber() &&
-        _student.getId() !== id,
+        _student.getDocumentNumber() === foundStudent.getDocumentNumber(),
     );
 
     if (studentExists) {

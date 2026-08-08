@@ -9,7 +9,7 @@ const run = async () => {
       console.log('Database connected successfully');
     })
     .catch((error: any) =>
-      console.error(`Error connecting to database...`, error),
+      console.error(`Error connecting to database...`, error.message),
     );
 
   console.log(`Server running on port ${port}`);
