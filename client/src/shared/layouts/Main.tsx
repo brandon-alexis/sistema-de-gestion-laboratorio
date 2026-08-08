@@ -2,11 +2,14 @@ import type { ReactNode } from 'react';
 
 interface MainProps {
   children: ReactNode;
+  className?: string;
 }
 
-export function Main({ children }: MainProps) {
+export function Main({ children, className }: MainProps) {
   return (
-    <main className="bg-white w-full min-h-screen p-9 text-black">
+    <main
+      className={`bg-white w-full min-h-screen p-9 text-black ${className}`}
+    >
       {children}
     </main>
   );

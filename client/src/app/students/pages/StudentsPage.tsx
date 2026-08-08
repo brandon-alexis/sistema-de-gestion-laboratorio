@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Main } from '@shared/layouts/Main';
 import { StudentsTable } from '@students/components/StudentsTable';
 
-export function Students() {
+export function StudentsPage() {
   return (
     <Main>
       <section className="space-y-8">
