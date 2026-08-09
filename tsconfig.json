@@ -44,7 +44,9 @@
     "paths": {
       "@src/*": ["./src/*"],
       "@config/*": ["./src/shared/config/*"],
-      "@students/*": ["./src/app/students/*"]
+      "@students/*": ["./src/app/students/*"],
+      "@professors/*": ["./src/app/professors/*"],
+      "@items/*": ["./src/app/items/*"]
     }
   },
   "include": ["./src/**/*.ts", "./src/tests/**/*.test.ts"],
