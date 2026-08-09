@@ -2,7 +2,7 @@ import type { StudentRepository } from '@students/repositories/StudentRepository
 import { Student } from '@students/models/Student.js';
 import { StudentNotFoundException } from '@students/exceptions/StudentNotFoundException.js';
 import { StudentAlreadyExistsException } from '@students/exceptions/StudentAlreadyExists.js';
-import type { UpdateStudentDto } from '../dtos/UpdateStudentDto.js';
+import type { UpdateStudentDto } from '@students/dtos/UpdateStudentDto.js';
 
 export class StudentService {
   constructor(private readonly studentRepository: StudentRepository) {}
@@ -45,26 +45,28 @@ export class StudentService {
       throw new StudentNotFoundException();
     }
 
-    const students: Student[] = await this.studentRepository.findAll();
+    const documentNumber = dto.getDocumentNumber();
 
-    const studentExists: boolean = students.some(
-      (_student) =>
-        _student.getDocumentNumber() === foundStudent.getDocumentNumber(),
-    );
+    if (documentNumber !== undefined) {
+      const students: Student[] = await this.studentRepository.findAll();
 
-    if (studentExists) {
-      throw new StudentAlreadyExistsException();
+      const studentExists: boolean = students.some(
+        (_student) =>
+          _student.getDocumentNumber() === documentNumber &&
+          _student.getId() !== id,
+      );
+
+      if (studentExists) {
+        throw new StudentAlreadyExistsException();
+      }
+
+      foundStudent.setDocumentNumber(documentNumber);
     }
 
     const fullname = dto.getFullname();
-    const documentNumber = dto.getDocumentNumber();
 
     if (fullname !== undefined) {
       foundStudent.setFullname(fullname);
-    }
-
-    if (documentNumber !== undefined) {
-      foundStudent.setDocumentNumber(documentNumber);
     }
 
     await this.studentRepository.update(id, foundStudent);

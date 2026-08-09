@@ -32,7 +32,7 @@ export class TypeOrmStudentRepository implements StudentRepository {
     const foundStudent = await this.repository.findOneBy({ id });
 
     if (!foundStudent) {
-      return Promise.reject();
+      return;
     }
 
     const _student = StudentMapper.fromStudentToStudentEntity(student);
