@@ -6,6 +6,8 @@ import {
   postgresPassword,
 } from '@config/loadEnvironment.js';
 import { StudentEntity } from '@students/entities/StudentEntity.js';
+import { ProfessorEntity } from '@professors/entities/ProfessorEntity.js';
+import { ItemEntity } from '@items/entities/ItemEntity.js';
 
 export const dataSource = new DataSource({
   type: 'postgres',
@@ -14,6 +16,6 @@ export const dataSource = new DataSource({
   username: postgresUser,
   password: postgresPassword,
   database: 'postgres',
-  entities: [StudentEntity],
+  entities: [StudentEntity, ProfessorEntity, ItemEntity],
   synchronize: true,
 });

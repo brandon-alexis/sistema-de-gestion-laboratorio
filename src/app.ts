@@ -3,6 +3,8 @@ import cors from 'cors';
 import logger from 'morgan';
 
 import { router as stutendRouter } from '@students/routers/studentRouter.js';
+import { router as professorRouter } from '@professors/routers/professorRouter.js';
+import { router as itemRouter } from '@items/routers/itemRouter.js';
 
 export const app = express();
 
@@ -12,3 +14,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use('/api/students', stutendRouter);
+app.use('/api/professors', professorRouter);
+app.use('/api/items', itemRouter);
