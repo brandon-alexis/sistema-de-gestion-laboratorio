@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
+import { Link } from 'react-router';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -20,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 
 import { Main } from '@/shared/layouts/Main';
+import type { StudentDto } from '@students/dto/StudentDto';
 
 const studentSchema = z.object({
   fullname: z
@@ -33,17 +34,15 @@ const studentSchema = z.object({
     .max(20, 'El documento no puede superar los 20 caracteres.'),
 });
 
-type StudentFormValues = z.infer<typeof studentSchema>;
-
 interface StudentFormProps {
-  student?: StudentFormValues;
-  onSubmit: (data: StudentFormValues) => Promise<void>;
+  student?: StudentDto;
+  onSubmit: (data: StudentDto) => Promise<void>;
 }
 
 export function StudentForm({ student, onSubmit }: StudentFormProps) {
   const isEditing = Boolean(student);
 
-  const form = useForm<StudentFormValues>({
+  const form = useForm<StudentDto>({
     resolver: zodResolver(studentSchema),
     defaultValues: {
       fullname: student?.fullname ?? '',
@@ -51,7 +50,7 @@ export function StudentForm({ student, onSubmit }: StudentFormProps) {
     },
   });
 
-  async function handleSubmit(data: StudentFormValues) {
+  async function handleSubmit(data: StudentDto) {
     await onSubmit(data);
   }
 
@@ -124,11 +123,11 @@ export function StudentForm({ student, onSubmit }: StudentFormProps) {
           </form>
         </CardContent>
 
-        <CardFooter>
+        <div className="grid grid-cols-2 gap-2 px-3">
           <Button
             type="submit"
             form="student-form"
-            className="w-full"
+            className="cursor-pointer"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting
@@ -137,7 +136,15 @@ export function StudentForm({ student, onSubmit }: StudentFormProps) {
                 ? 'Actualizar estudiante'
                 : 'Registrar estudiante'}
           </Button>
-        </CardFooter>
+          <Button variant="destructive">
+            <Link
+              to="/students"
+              className="w-full h-full flex items-center justify-center"
+            >
+              Cancelar
+            </Link>
+          </Button>
+        </div>
       </Card>
     </Main>
   );

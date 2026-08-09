@@ -1,9 +1,11 @@
-import { toast } from 'sonner';
+import { useNavigate } from 'react-router';
+
+import { toast } from '@/components/ui/toast';
 import { Main } from '@/shared/layouts/Main';
+
 import { StudentForm } from '@students/components/StudentForm';
 import type { StudentDto } from '@students/dto/StudentDto';
 import { studentApi } from '@students/api/studentApi';
-import { useNavigate } from 'react-router';
 
 export function CreateStudentPage() {
   const navigate = useNavigate();

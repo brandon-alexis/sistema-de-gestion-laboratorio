@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { toast } from 'sonner';
+import { toast } from '@/components/ui/toast';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Button } from '@/components/ui/button';

@@ -31,14 +31,14 @@ export function StudentsTable() {
   }, []);
 
   if (loading) {
-    return <span>Loading...</span>;
+    return <span>Cargando estudiantes...</span>;
   }
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="">Id</TableHead>
+          <TableHead>Nro Documento</TableHead>
           <TableHead>Nombre</TableHead>
           <TableHead>Acciones</TableHead>
         </TableRow>

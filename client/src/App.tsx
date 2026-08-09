@@ -1,5 +1,5 @@
-import { Main } from '@shared/layouts/Main';
 import { Link } from 'react-router';
+import { Main } from '@shared/layouts/Main';
 
 export default function App() {
   return (

@@ -10,8 +10,21 @@ export const studentApi = {
 
     return data;
   },
+  getStudentById: async (id: string): Promise<ResponseStudentDto> => {
+    const { data } = await api.get(`${endpoint}/${id}`);
+
+    return data;
+  },
   createStudent: async (student: StudentDto): Promise<{ message: string }> => {
     const { data } = await api.post(endpoint, student);
+
+    return data;
+  },
+  updateStudent: async (
+    id: string,
+    student: StudentDto,
+  ): Promise<{ message: string }> => {
+    const { data } = await api.put(`${endpoint}/${id}`, student);
 
     return data;
   },

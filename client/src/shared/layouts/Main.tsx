@@ -8,7 +8,7 @@ interface MainProps {
 export function Main({ children, className }: MainProps) {
   return (
     <main
-      className={`bg-white w-full min-h-screen p-9 text-black ${className}`}
+      className={`bg-white w-full min-h-screen py-5 px-9 text-black ${className}`}
     >
       {children}
     </main>
