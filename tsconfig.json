@@ -43,10 +43,13 @@
     "skipLibCheck": true,
     "paths": {
       "@src/*": ["./src/*"],
+      "@shared/*": ["./src/shared/*"],
       "@config/*": ["./src/shared/config/*"],
       "@students/*": ["./src/app/students/*"],
       "@professors/*": ["./src/app/professors/*"],
-      "@items/*": ["./src/app/items/*"]
+      "@items/*": ["./src/app/items/*"],
+      "@itemCategories/*": ["./src/app/itemCategories/*"],
+      "@itemTypes/*": ["./src/app/itemTypes/*"]
     }
   },
   "include": ["./src/**/*.ts", "./src/tests/**/*.test.ts"],

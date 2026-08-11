@@ -1,9 +1,4 @@
 import type { Item } from '@items/models/Item.js';
+import type { BaseRepository } from '@shared/repository/BaseRepository.js';
 
-export interface ItemRepository {
-  create(item: Item): Promise<void>;
-  update(id: string, item: Item): Promise<void>;
-  delete(id: string): Promise<void>;
-  findById(id: string): Promise<Item | null>;
-  findAll(): Promise<Item[]>;
-}
+export interface ItemRepository extends BaseRepository<string, Item> {}

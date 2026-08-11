@@ -9,7 +9,7 @@ export default {
           parser: {
             syntax: 'typescript',
           },
-          target: 'nodenext',
+          target: 'es2022',
         },
         module: {
           type: 'nodenext',
