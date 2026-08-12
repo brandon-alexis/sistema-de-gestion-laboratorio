@@ -1,5 +1,5 @@
 import { ItemCategory } from '@itemCategories/models/ItemCategory.js';
-import type { ItemCategoryEntity } from '@itemCategories/entities/ItemCategoryEntity.js';
+import { ItemCategoryEntity } from '@itemCategories/entities/ItemCategoryEntity.js';
 import type { CreateItemCategoryDto } from '@itemCategories/dtos/CreateItemCategoryDto.js';
 import { ResponseItemCategoryDto } from '@itemCategories/dtos/ResponseItemCategoryDto.js';
 
@@ -7,12 +7,13 @@ export class ItemCategoryMapper {
   public static fromCategoryToCategoryEntity(
     category: ItemCategory,
   ): ItemCategoryEntity {
-    return {
-      id: category.getId(),
-      name: category.getName(),
-      createdAt: category.getCreatedAt(),
-      updatedAt: category.getUpdatedAt(),
-    };
+    return new ItemCategoryEntity(
+      category.getId(),
+      category.getName(),
+      [],
+      category.getCreatedAt(),
+      category.getUpdatedAt(),
+    );
   }
 
   public static fromCategoryEntityToCategory(entity: ItemCategoryEntity) {

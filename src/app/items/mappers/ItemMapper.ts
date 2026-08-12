@@ -1,7 +1,9 @@
 import type { CreateItemDto } from '@items/dtos/CreateItemDto.js';
 import { ResponseItemDto } from '@items/dtos/ResponseItemDto.js';
-import type { ItemEntity } from '@items/entities/ItemEntity.js';
+import { ItemEntity } from '@items/entities/ItemEntity.js';
 import { Item } from '@items/models/Item.js';
+import { ItemCategoryEntity } from '@itemCategories/entities/ItemCategoryEntity.js';
+import { ItemTypeEntity } from '@itemTypes/entities/ItemTypeEntity.js';
 import { ItemCategory } from '@items/types/ItemCategory.js';
 import { ItemType } from '@items/types/ItemType.js';
 
@@ -27,22 +29,38 @@ export class ItemMapper {
   }
 
   public static fromItemToItemEntity(item: Item): ItemEntity {
-    return {
-      id: item.getId(),
-      name: item.getName(),
-      category: item.getCategory(),
-      type: item.getType(),
-      createdAt: item.getCreatedAt(),
-      updatedAt: item.getUpdatedAt(),
-    };
+    const categoryEntity = new ItemCategoryEntity(
+      crypto.randomUUID(),
+      item.getCategory(),
+      [],
+      new Date(),
+      new Date(),
+    );
+
+    const typeEntity = new ItemTypeEntity(
+      crypto.randomUUID(),
+      item.getType(),
+      [],
+      new Date(),
+      new Date(),
+    );
+
+    return new ItemEntity(
+      item.getId(),
+      item.getName(),
+      categoryEntity,
+      typeEntity,
+      item.getCreatedAt(),
+      item.getUpdatedAt(),
+    );
   }
 
   public static fromItemEntityToItem(entity: ItemEntity): Item {
     return new Item(
       entity.id,
       entity.name,
-      entity.category as ItemCategory,
-      entity.type as ItemType,
+      (entity.category?.name ?? entity.category) as ItemCategory,
+      (entity.type?.name ?? entity.type) as ItemType,
       entity.createdAt,
       entity.updatedAt,
     );

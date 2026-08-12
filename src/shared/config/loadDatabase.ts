@@ -8,6 +8,8 @@ import {
 import { StudentEntity } from '@students/entities/StudentEntity.js';
 import { ProfessorEntity } from '@professors/entities/ProfessorEntity.js';
 import { ItemEntity } from '@items/entities/ItemEntity.js';
+import { ItemCategoryEntity } from '@itemCategories/entities/ItemCategoryEntity.js';
+import { ItemTypeEntity } from '@itemTypes/entities/ItemTypeEntity.js';
 
 export const dataSource = new DataSource({
   type: 'postgres',
@@ -16,6 +18,12 @@ export const dataSource = new DataSource({
   username: postgresUser,
   password: postgresPassword,
   database: 'postgres',
-  entities: [StudentEntity, ProfessorEntity, ItemEntity],
+  entities: [
+    StudentEntity,
+    ProfessorEntity,
+    ItemEntity,
+    ItemCategoryEntity,
+    ItemTypeEntity,
+  ],
   synchronize: true,
 });

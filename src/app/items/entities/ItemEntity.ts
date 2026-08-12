@@ -1,6 +1,6 @@
-import { Column, Entity } from 'typeorm';
-import { ItemCategory } from '@items/types/ItemCategory.js';
-import { ItemType } from '../types/ItemType.js';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { ItemCategoryEntity } from '@itemCategories/entities/ItemCategoryEntity.js';
+import { ItemTypeEntity } from '@itemTypes/entities/ItemTypeEntity.js';
 
 @Entity('items')
 export class ItemEntity {
@@ -10,11 +10,19 @@ export class ItemEntity {
   @Column({ type: 'varchar', unique: true, length: 255 })
   name: string;
 
-  @Column({ type: 'varchar', length: 255, enum: ItemCategory })
-  category: string;
+  @ManyToOne(() => ItemCategoryEntity, (category) => category.items, {
+    eager: true,
+    nullable: false,
+  })
+  @JoinColumn({ name: 'categoryId' })
+  category: ItemCategoryEntity;
 
-  @Column({ type: 'varchar', length: 255, enum: ItemType })
-  type: string;
+  @ManyToOne(() => ItemTypeEntity, (type) => type.items, {
+    eager: true,
+    nullable: false,
+  })
+  @JoinColumn({ name: 'typeId' })
+  type: ItemTypeEntity;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
@@ -25,8 +33,8 @@ export class ItemEntity {
   constructor(
     id: string,
     name: string,
-    category: string,
-    type: string,
+    category: ItemCategoryEntity,
+    type: ItemTypeEntity,
     createdAt: Date,
     updatedAt: Date,
   ) {

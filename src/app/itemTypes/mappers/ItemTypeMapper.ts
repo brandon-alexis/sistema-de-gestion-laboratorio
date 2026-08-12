@@ -1,6 +1,6 @@
 import type { CreateItemTypeDto } from '@itemTypes/dtos/CreateItemTypeDto.js';
 import { ResponseItemTypeDto } from '@itemTypes/dtos/ResponseItemTypeDto.js';
-import type { ItemTypeEntity } from '@itemTypes/entities/ItemTypeEntity.js';
+import { ItemTypeEntity } from '@itemTypes/entities/ItemTypeEntity.js';
 import { ItemType } from '@itemTypes/models/ItemType.js';
 
 export class ItemTypeMapper {
@@ -22,12 +22,13 @@ export class ItemTypeMapper {
   public static fromItemTypeToItemTypeEntity(
     itemType: ItemType,
   ): ItemTypeEntity {
-    return {
-      id: itemType.getId(),
-      name: itemType.getName(),
-      createdAt: itemType.getCreatedAt(),
-      updatedAt: itemType.getUpdatedAt(),
-    };
+    return new ItemTypeEntity(
+      itemType.getId(),
+      itemType.getName(),
+      [],
+      itemType.getCreatedAt(),
+      itemType.getUpdatedAt(),
+    );
   }
 
   public static fromItemTypeEntityToItemType(entity: ItemTypeEntity): ItemType {
