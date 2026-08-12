@@ -2,8 +2,8 @@ import type { StudentRepository } from '@students/repositories/StudentRepository
 import { StudentService } from '@students/services/StudentService.js';
 import { Student } from '@students/models/Student.js';
 import { UpdateStudentDto } from '@students/dtos/UpdateStudentDto.js';
-import { StudentNotFoundException } from '@src/app/students/exceptions/StudentNotFoundException.js';
-import { StudentAlreadyExistsException } from '@src/app/students/exceptions/StudentAlreadyExists.js';
+import { StudentNotFoundException } from '@students/exceptions/StudentNotFoundException.js';
+import { StudentAlreadyExistsException } from '@students/exceptions/StudentAlreadyExists.js';
 
 function createdStudentRepositoryMock(): jest.Mocked<StudentRepository> {
   return {
