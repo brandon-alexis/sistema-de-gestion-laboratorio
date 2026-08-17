@@ -36,11 +36,14 @@ describe('ProfessorService', () => {
   describe('createProfessor', () => {
     it('deberia crear un profesor', async () => {
       const professorId = crypto.randomUUID().toString();
+      const professorCreatedAt = new Date();
+      const professorUpdatedAt = new Date();
+
       const newProfessor = new Professor(
         professorId,
         'manolo castilla',
-        new Date(),
-        new Date(),
+        professorCreatedAt,
+        professorUpdatedAt,
       );
 
       const professorRepository = createProfessorRepositoryMock();
@@ -51,6 +54,16 @@ describe('ProfessorService', () => {
       const professorService = new ProfessorService(professorRepository);
 
       await professorService.createProfessor(newProfessor);
+
+      expect(professorRepository.create).toHaveBeenCalledTimes(1);
+      expect(professorRepository.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: professorId,
+          fullname: 'manolo castilla',
+          createdAt: professorCreatedAt,
+          updatedAt: professorUpdatedAt,
+        }),
+      );
     });
 
     it('deberia lanzar error si el profesor a registrar ya existe', async () => {
