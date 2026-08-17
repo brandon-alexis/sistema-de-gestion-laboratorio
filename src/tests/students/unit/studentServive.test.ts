@@ -144,6 +144,20 @@ describe('StudentService', () => {
       expect(studentRepository.findById).toHaveBeenCalledWith(studentId);
       expect(studentRepository.findById).toHaveBeenCalledTimes(1);
     });
+
+    it('deberia lanzar error si el estudiante a buscar no existe', async () => {
+      const studentId = crypto.randomUUID().toString();
+
+      const studentRepository = createdStudentRepositoryMock();
+
+      studentRepository.findById.mockResolvedValue(null);
+
+      const studentService = new StudentService(studentRepository);
+
+      await expect(studentService.getStudentById(studentId)).rejects.toThrow(
+        StudentNotFoundException,
+      );
+    });
   });
 
   describe('updateStudent', () => {
